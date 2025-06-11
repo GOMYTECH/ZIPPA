@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zippa | Digital Financial Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-blue: #00f0ff;
+            --neon-purple: #b300ff;
+            --dark-space: #0a0a1a;
+            --cyber-pink: #ff00aa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--dark-space);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--neon-blue);
+        }
+        
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(10, 10, 26, 0.9);
+            min-width: 200px;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 1;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            padding: 10px 0;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .balance-container {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(179, 0, 255, 0.1));
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .balance-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent,
+                rgba(0, 240, 255, 0.1),
+                transparent
+            );
+            transform: rotate(60deg);
+            animation: shine 6s infinite;
+            z-index: -1;
+        }
+        
+        .balance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .balance-title {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .balance-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--neon-blue), white);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .balance-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .balance-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .deposit-btn {
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+        }
+        
+        .withdraw-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid var(--neon-blue);
+        }
+        
+        .balance-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+        }
+        
+        .services-section {
+            margin: 40px 0;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--cyber-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 240, 255, 0.2);
+            border-color: var(--neon-blue);
+        }
+        
+        .service-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--neon-blue);
+        }
+        
+        .service-name {
+            font-size: 0.9rem;
+        }
+        
+        .quick-links {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .quick-link {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .quick-link:hover {
+            background: rgba(0, 240, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.2);
+        }
+        
+        .quick-link i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--neon-blue);
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--neon-blue);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--neon-blue);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .menu-btn {
+                display: block;
+                position: absolute;
+                top: 25px;
+                right: 20px;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .dropdown-content {
+                position: static;
+                display: none;
+                background: transparent;
+                border: none;
+                padding: 10px 0 10px 20px;
+            }
+            
+            .dropdown:hover .dropdown-content {
+                display: none;
+            }
+            
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .quick-links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Zippa</div>
+            <button class="menu-btn" id="menu-btn">☰</button>
+            <nav>
+                <ul id="nav-menu">
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-wifi"></i> Data Services</a>
+                        <div class="dropdown-content">
+                            <a href="#"><i class="fas fa-download"></i> Buy Data</a>
+                            <a href="#"><i class="fas fa-upload"></i> Sell Data</a>
+                            <a href="#"><i class="fas fa-exchange-alt"></i> Data P2P</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-phone-alt"></i> Airtime</a>
+                        <div class="dropdown-content">
+                            <a href="#"><i class="fas fa-download"></i> Buy Airtime</a>
+                            <a href="#"><i class="fas fa-upload"></i> Sell Airtime</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-bolt"></i> Utilities</a>
+                        <div class="dropdown-content">
+                            <a href="#"><i class="fas fa-tv"></i> Cable TV</a>
+                            <a href="#"><i class="fas fa-plug"></i> Electricity</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-coins"></i> Crypto</a>
+                        <div class="dropdown-content">
+                            <a href="#"><i class="fas fa-download"></i> Buy Bitcoin</a>
+                            <a href="#"><i class="fas fa-upload"></i> Sell Bitcoin</a>
+                            <a href="#"><i class="fas fa-gift"></i> Buy Gift Cards</a>
+                            <a href="#"><i class="fas fa-gifts"></i> Sell Gift Cards</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-money-bill-wave"></i> Financial</a>
+                        <div class="dropdown-content">
+                            <a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a>
+                            <a href="#"><i class="fas fa-bullhorn"></i> Advertising</a>
+                            <a href="#"><i class="fas fa-sms"></i> Bulk SMS</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-user"></i> Profile</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div class="balance-container">
+            <div class="balance-header">
+                <div class="balance-title">Available Balance</div>
+                <div class="balance-amount">₦25,840.50</div>
+            </div>
+            <div class="balance-actions">
+                <button class="balance-btn deposit-btn">
+                    <i class="fas fa-plus-circle"></i> Deposit
+                </button>
+                <button class="balance-btn withdraw-btn">
+                    <i class="fas fa-minus-circle"></i> Withdraw
+                </button>
+            </div>
+        </div>
+        
+        <div class="services-section">
+            <h2 class="section-title">Popular Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-download"></i></div>
+                    <div class="service-name">Buy Airtime</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-wifi"></i></div>
+                    <div class="service-name">Buy Data</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-upload"></i></div>
+                    <div class="service-name">Sell Airtime</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-network-wired"></i></div>
+                    <div class="service-name">Sell Data</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-tv"></i></div>
+                    <div class="service-name">Cable TV</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-plug"></i></div>
+                    <div class="service-name">Electricity</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-share-alt"></i></div>
+                    <div class="service-name">Social Monetization</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-ad"></i></div>
+                    <div class="service-name">Business Ads</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-dice"></i></div>
+                    <div class="service-name">Betting</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-sms"></i></div>
+                    <div class="service-name">Bulk SMS</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <div class="service-name">Data P2P</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-comment-alt"></i></div>
+                    <div class="service-name">Text to SMS</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-coins"></i></div>
+                    <div class="service-name">Buy Bitcoin</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-bitcoin"></i></div>
+                    <div class="service-name">Sell Bitcoin</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-gift"></i></div>
+                    <div class="service-name">Buy Gift Cards</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-gifts"></i></div>
+                    <div class="service-name">Sell Gift Cards</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-tasks"></i></div>
+                    <div class="service-name">Tasks</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quick-links">
+            <a href="#" class="quick-link">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Transactions</span>
+            </a>
+            <a href="#" class="quick-link">
+                <i class="fas fa-history"></i>
+                <span>History</span>
+            </a>
+            <a href="#" class="quick-link">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Support</a>
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+        </div>
+        <div class="social-icons">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+        </div>
+        <div class="copyright">
+            © 2023 Zippa Technologies. All rights reserved.
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+        
+        // Mobile dropdown functionality
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        if (window.innerWidth <= 768) {
+            dropdowns.forEach(dropdown => {
+                const link = dropdown.querySelector('a');
+                
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                });
+            });
+        }
+        
+        // Balance animation
+        const balanceContainer = document.querySelector('.balance-container');
+        
+        balanceContainer.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            balanceContainer.style.transform = `perspective(1000px) rotateX(${(y - 0.5) * 5}deg) rotateY(${(x - 0.5) * 5}deg)`;
+        });
+        
+        balanceContainer.addEventListener('mouseleave', () => {
+            balanceContainer.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        });
+    </script>
+</body>
+</html>
