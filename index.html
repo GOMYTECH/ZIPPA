@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zippa | Buy Airtime, Data, Crypto & More</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-blue: #00f0ff;
+            --neon-purple: #b300ff;
+            --dark-space: #0a0a1a;
+            --cyber-pink: #ff00aa;
+        }
+        
+        body {
+            background-color: var(--dark-space);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header with Hamburger Menu */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--neon-blue);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--neon-blue);
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 0;
+        }
+        
+        .hero-text {
+            width: 50%;
+        }
+        
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-text p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        }
+        
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--neon-blue);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+        }
+        
+        .hero-image {
+            width: 45%;
+            text-align: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(179, 0, 255, 0.3);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .features h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--cyber-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 240, 255, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--neon-blue);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        /* How It Works Dropdown */
+        .how-it-works {
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .steps {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .step {
+            background: rgba(0, 240, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        /* About Us & Terms */
+        .about, .terms {
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        /* Footer with Social Icons */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            background: var(--neon-blue);
+        }
+        
+        .copyright {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                background: var(--dark-space);
+                padding: 20px;
+                z-index: 1000;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text, .hero-image {
+                width: 100%;
+            }
+            
+            .hero-image {
+                margin-top: 30px;
+            }
+            
+            .cta-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Zippa</div>
+            <button class="menu-btn" id="menu-btn">☰</button>
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#terms">Terms</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Your One-Stop VTU & Digital Platform</h1>
+                <p>Buy/Sell Airtime, Data, Betting Funds, Electricity, Crypto & More. Grow your social media and earn with micro-tasks.</p>
+                <div class="cta-buttons">
+                    <a href="register.html" class="cta-button">Register Now</a>
+                    <a href="login.html" class="cta-button secondary">Login</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/500x400/0a0a1a/00f0ff?text=Zippa+App" alt="Zippa App">
+            </div>
+        </section>
+        
+        <section class="features" id="features">
+            <h2>Our Services</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Airtime & Data</h3>
+                    <p>Buy/Sell cheap airtime & data for all networks.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Electricity & Cable TV</h3>
+                    <p>Pay bills for DStv, GOtv, Startimes, PHCN.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">₿</div>
+                    <h3>Crypto & Gift Cards</h3>
+                    <p>Trade Bitcoin, USDT, and convert to cash.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Social Growth</h3>
+                    <p>Get real followers on Instagram, Twitter, TikTok.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3>Micro-Tasking</h3>
+                    <p>Post tasks or earn by completing small jobs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖼️</div>
+                    <h3>Image-to-Text AI</h3>
+                    <p>Convert screenshots to editable text instantly.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="how-it-works" id="how-it-works">
+            <h2>How It Works</h2>
+            <button class="cta-button" id="toggle-steps">Show Steps</button>
+            <div class="steps" id="steps">
+                <div class="step">
+                    <h3>1. Register & Login</h3>
+                    <p>Create an account in seconds.</p>
+                </div>
+                <div class="step">
+                    <h3>2. Fund Your Wallet</h3>
+                    <p>Deposit via bank transfer or crypto.</p>
+                </div>
+                <div class="step">
+                    <h3>3. Start Transacting</h3>
+                    <p>Buy/Sell airtime, data, crypto, and more.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="about" id="about">
+            <h2>About Zippa</h2>
+            <p>Zippa is Nigeria’s leading digital platform for VTU services, crypto, and social growth.</p>
+        </section>
+        
+        <section class="terms" id="terms">
+            <h2>Terms & Conditions</h2>
+            <p>By using Zippa, you agree to our terms of service.</p>
+        </section>
+        
+        <section class="download" id="download">
+            <h2>Download Zippa Now</h2>
+            <div class="cta-buttons">
+                <a href="#" class="cta-button">Download for iOS</a>
+                <a href="#" class="cta-button secondary">Download for Android</a>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="#features">Services</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#about">About Us</a>
+            <a href="#terms">Terms</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="social-icons">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+        <p class="copyright">© 2023 Zippa. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+        
+        // How It Works Dropdown
+        const toggleSteps = document.getElementById('toggle-steps');
+        const steps = document.getElementById('steps');
+        
+        toggleSteps.addEventListener('click', () => {
+            steps.style.display = steps.style.display === 'block' ? 'none' : 'block';
+            toggleSteps.textContent = steps.style.display === 'block' ? 'Hide Steps' : 'Show Steps';
+        });
+    </script>
+</body>
+</html>
